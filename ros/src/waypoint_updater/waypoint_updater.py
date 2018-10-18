@@ -240,7 +240,7 @@ class WaypointUpdater(object):
         return ret
     #calculate the distance from current car position to the nearest front stop_line which is read from config file 
     def distostopline(self,closest_idx):
-        ret=10000;
+        ret=10000
         for i in range(len(self.stop_line_positions)):
             stopline_idx=self.get_closest_waypoint_idx1(self.stop_line_positions[i])
             dis=stopline_idx-closest_idx
@@ -372,9 +372,7 @@ class WaypointUpdater(object):
                 distance=self.distance2line(pos_vect,self.waypoints_2d[prev_idx],self.waypoints_2d[closest_idx])
                 obstacle_list.append([prev_idx,distance+6])
             self.obstacles=np.array(obstacle_list)
-        #test
-            self.obstacles[0][0]=400
-            self.obstacles[0][1]=6
+
         
         #    print(self.obstacles)    
 
