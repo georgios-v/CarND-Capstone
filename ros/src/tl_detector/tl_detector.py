@@ -27,7 +27,7 @@ class TLDetector(object):
         self.waypoint_tree = None
         self.camera_image = None
         self.lights = []
-	self.imagenum=0
+        self.imagenum=0
         rospy.Subscriber('/current_pose', PoseStamped, self.pose_cb)
         rospy.Subscriber('/base_waypoints', Lane, self.waypoints_cb)
 
@@ -49,7 +49,7 @@ class TLDetector(object):
         #To get the is_sim variable and pass it to TLClassifier constructor. Carla or simulation ?
         config_string = rospy.get_param("/traffic_light_config")
         traffic_config = yaml.load(config_string)
-	is_simf = True
+        is_simf = True
 
         self.bridge = CvBridge()
         
@@ -70,7 +70,7 @@ class TLDetector(object):
 
     def pose_cb(self, msg):
         self.pose = msg
-	
+    
     def waypoints_cb(self, waypoints):
         self.waypoints = waypoints
         if not self.waypoints_2d:
@@ -136,13 +136,13 @@ class TLDetector(object):
             return False
         
         cv_image = self.bridge.imgmsg_to_cv2(self.camera_image, "rgb8")
-	# # Get classification
+    # # Get classification
         lstate=self.light_classifier.get_classification(cv_image)
-	image=Image1.fromarray(cv_image)
-        image.save('img/'+str(self.imagenum)+'-'+str(lstate)+'.jpg')
-	self.imagenum=self.imagenum+1
-        print('lstate:'+str(lstate))
-	return lstate
+        #image=Image1.fromarray(cv_image)
+        #image.save('img/'+str(self.imagenum)+'-'+str(lstate)+'.jpg')
+        #self.imagenum=self.imagenum+1
+        #print('lstate:'+str(lstate))
+        return lstate
 
     def process_traffic_lights(self):
         """Finds closest visible traffic light, if one exists, and determines its
@@ -176,11 +176,11 @@ class TLDetector(object):
                     line_wp_idx=temp_wp_idx
         if closest_light:
             state=self.get_light_state(closest_light)
-	    self.light_dif=diff
+            self.light_dif=diff
             return line_wp_idx,state
-	else:
-	    self.light_dif=200
-        return -1, TrafficLight.UNKNOWN
+        else:
+            self.light_dif=200
+            return -1, TrafficLight.UNKNOWN
 
 
 if __name__ == '__main__':
